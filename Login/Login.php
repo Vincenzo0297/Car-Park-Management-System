@@ -41,11 +41,11 @@
                 <div class="form">
                     <h2>Please Login to Your Account</h2>
                         <div class="box">
-                            <input type="email" name="email" placeholder="Add your Email" />
+                            <input type="email" name="email" placeholder="Enter your Email" required />
                         </div>
 
                         <div class="box">
-                            <input type="password" name="password" placeholder="Enter your Password" />
+                            <input type="password" name="password" placeholder="Enter your Password" required />
                         </div>
 
                         <button type="submit">Sign In Your Account</button>
