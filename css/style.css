@@ -1,0 +1,446 @@
+:root {
+    --header-height: 3.5rem; /*56px*/
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --primary-color-hue:352;
+    --dark-color-lightness:17%;
+    --light-color-lightness:92%;
+    --white-color-lightness:100%;
+
+    --color-white: hsl(252, 30%, var(--white-color-lightness));
+    --color-light: hsl(252, 30%, var(--light-color-lightness));
+    --color-gray: hsl(252, 15%, 65%);
+    --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
+    --color-dark: hsl(252, 30%, var(--dark-color-lightness));
+
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --body-font: 'Rubik', sans-serif;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.75rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+
+    /*========== Font weight ==========*/
+    --font-medium: 400;
+    --font-semi-bold: 600;
+
+    /*========== Margenes Bottom ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --m-0-5: .5rem;
+    --m-0-75: .75rem;
+    --m-1: 1rem;
+    --m-1-5: 1.5rem;
+    --m-2: 2rem;
+    --m-2-5: 2.5rem;
+
+    /*========== Card padding ==========*/
+    --card-padding:1.9rem 0.95rem;
+
+    /*========== Border radius ==========*/
+    --border-radius: 1.25rem;
+
+    /*========== Box shadow ==========*/
+    --box-shadow: 0px 5px 20px 0px rgba(69, 67, 96, 0.1);
+}
+
+/*========== Responsive Typography ==========*/
+@media screen and (max-width:992px){
+    :root{
+        --h1-font-size: 1.75rem;
+        --h2-font-size: 1.5rem;
+        --h3-font-size: 1rem;
+        --normal-font-size: .938rem;
+        --small-font-size: .875rem;
+    }
+}
+
+/*========== Base ==========*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body,button,input,textarea{
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+}
+body{
+    background-color: rgb(255, 255, 255);
+    color: var(--color-dark);
+    line-height: 1.7;
+    font-weight: var(--font-medium);
+}
+img{
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+h1,h2,h3{
+    font-weight: var(--font-semi-bold);
+}
+h1{
+    font-size: var(--h1-font-size);
+}
+h2{
+    font-size: var(--h2-font-size);
+}
+h3{
+    font-size: var(--h3-font-size);
+}
+
+/*========== Expand the section with container ==========*/
+.section .about-container{
+    padding-top: 20.7rem;
+    padding-bottom: 20rem;
+}
+.section-title{
+    text-align: center;
+    font-size: 2.25rem;
+    margin-left: var(--m-0-75);
+    margin-bottom: var(--m-2-5);
+}
+.padd-15{
+    padding-left: 40px;
+    padding-right: 280px;
+}
+.col-2{
+    margin-bottom: 50px;
+    margin-top: 100px;
+}
+
+/*========== Layout ==========*/
+.container{
+    max-width: 1400px;
+    margin:auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*========== Header ==========*/
+.header{
+    width: 100%;
+    background-color: #665A5A;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/*========== NAV ==========*/
+.nav{
+    height: calc(var(--header-height) + 1.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 3rem;
+}
+.nav-logo{
+    font-size: var(--h2-font-size);
+    font-weight: var(--font-semi-bold);
+    letter-spacing: 0.125rem;
+}
+.nav-menu{
+    margin-left:auto;
+}
+.nav-list{
+    display: flex;
+    column-gap: 3rem;
+}
+.nav-link{
+    font-weight: var(--font-medium);
+    transition: .3s;
+}
+.nav-link:hover{
+    color: lightgray;
+}
+.nav-close{
+    font-size: 1rem;
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    cursor: pointer;
+}
+.nav-btns{
+    display: inline-flex;
+    align-items: center;
+    column-gap: 1rem;
+}
+.nav-close{
+    display: none;
+}
+.nav-toggle{
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    color: white;
+}
+.active-link{
+    position: relative;
+}
+.scroll-header{
+    box-shadow: 0 1px 4px rgba(165, 125, 125, 0.02);
+}
+
+/*========== About ==========*/
+.about.section {
+  color: white; /* Text color */
+  background-image: url('/my-react-app/src/component/Image/schoolwallpaper.jpg'); /* Replace with your image path */
+  background-size: cover;        /* Make the image cover the container */
+  background-position: center;   /* Center the image */
+  background-repeat: no-repeat;  /* Prevent repeating */
+  background-attachment: fixed;  /* Keep the image fixed when scrolling or zooming */
+}
+.about-content{
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+.about-text p{
+    text-align: justify;
+    margin-bottom: var(--m-1);
+    color: black;
+}
+.btn {
+  line-height: 3;
+  border-radius: 5px;
+  width: 20%;      /* Takes full width of parent */
+  display: block;   /* Allows width: 100% to work */
+  text-align: center;
+  font-size: 14px;
+}
+.btn-default{
+    color: #000000;
+    vertical-align: middle;
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+}
+.btn-default:hover{
+    animation-name: button-push;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+@keyframes button-push{
+    50%{
+        transform: scale(0.8);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+/*========== Login ==========*/
+.login-container {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 70px;
+    padding: 20px 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(203, 190, 190, 0.1);
+}
+.login-container .form h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #232323;
+}
+.login-container .form .box {
+    position: relative;
+    margin-top: 15px;
+}
+.login-container .form .box input,
+.login-container .form .box select {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #8a8a8a;
+    padding: 20px 0px;
+    padding-right: 40px;
+    font-size: 16px;
+}
+.login-container .form p {
+    margin-top: 10px;
+    color: #232323;
+    font-size: 14px;
+}
+.login-container .form button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    outline: none;
+    background: #2196F3;
+    margin-top: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.login-container .form button:hover {
+    background-color: #0056b3;
+}
+.login-container .form .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+.toggle-password:focus {
+    outline: none;
+}
+/* Dropdown selection styling */
+.login-container .form .box select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+.login-container .form .box::after {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #8a8a8a;
+}
+/* Radio button styling */
+.login-container .form .radio-group {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+.login-container .form .radio-group label {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.login-container .form .radio-group input[type="radio"] {
+    display: none;
+}
+.login-container .form .radio-group label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2196F3;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.login-container .form .radio-group input[type="radio"]:checked + label:before {
+    background-color: #2196F3;
+}
+.login-container .form .radio-group label span {
+    font-size: 16px;
+    color: #232323;
+}
+
+/*========== Footer ==========*/
+footer{
+    margin-top: 60px;
+    text-align: center;
+    padding: 20px;
+}
+footer p{
+    color: #000000;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width:768px){
+    body{
+        margin: var(--header-height) 0 0 0;
+    }
+    .container{
+        max-width: 568px;
+    }
+    .nav-list{
+        flex-direction: column;
+        row-gap: 1.5rem;
+    }
+    .nav-list li a{
+        color: #000000;
+    }
+    .nav-menu{
+        position: fixed;
+        background-color: rgb(155, 165, 162);
+        width: 40%;
+        height: 100%;
+        top: 0;
+        right: -100%;
+        padding: 4rem 0 0 3rem;
+        border-radius: 5px 0 0 20px;
+        z-index: 100;
+        transition: .3s;
+    }
+
+    /*show menu */
+    .show-menu{
+        right: 0;
+    }
+    .nav-close,
+    .nav-toggle{
+        display: inline-flex;
+    }
+    .nav-close{
+        color: #fff;
+        font-size: 30px;
+    }
+    .nav-toggle{
+        font-size: 30px;
+    }
+
+    /* Footer styles */
+    footer {
+        padding: 10px;
+        text-align: center;
+    }
+    footer h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+    footer p {
+        font-size: 12px;
+    }
+    footer p.description {
+        font-size: 10px;
+        width: 90%;
+        margin: 0 auto;
+    }
+}
