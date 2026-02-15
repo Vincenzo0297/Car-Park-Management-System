@@ -8,30 +8,46 @@
 </head>
 <body>
     <?php
-        $message = $namemessage = $surnamemessage = $passwordmessage = $confirmPasswordMessage = $numbermessage = $emailmessage =  ""; //Initlize for error messages;
+        require '../Database Connection/Connection.php';
+
+        $message = $namemessage = $emailmessage = $passwordmessage = $confirmPasswordMessage = $numbermessage =  ""; //Initlize for error messages;
         
         if(isset($_POST['submit'])) { //Check before Submitting
 
             //Initilize the variables 
-            $username = $_POST['userName'];
-            $useremail = $_POST['userEmail'];
+            $username = trim($_POST['userName']);
+            $useremail = trim($_POST['userEmail']);
             $userpassword = $_POST['userPassword'];
             $userConfirmPassword = $_POST['userConfirmPassword'];
-            $usernumber = $_POST['userNumber'];
+            $usernumber = trim($_POST['userNumber']);
+            $userRole = $_POST['userRole'];
 
             //Form validation check 
-            if (!preg_match("/^[a-zA-Z]*$/", $username)) {
+            if (!preg_match("/^[a-zA-Z ]*$/", $username)) {
                 $namemessage = "Only letters and white space allowed in name field";
             } else if(!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $useremail)) {
                 $emailmessage = "Invalid email format";
             } elseif (!preg_match("/^[a-zA-Z0-9!@#$%^&*]+$/", $userpassword)) {
                 $passwordmessage = "Password must contain only letters (both uppercase and lowercase), numbers, and special characters";
             } elseif ($userpassword !== $userConfirmPassword) {
-                $passwordmessage = "Passwords do not match";
-            }elseif (!preg_match("/^\d{9}$/", $usernumber)) {
+                $confirmPasswordMessage = "Passwords do not match";
+            } elseif (!preg_match("/^\d{9}$/", $usernumber)) {
                 $numbermessage = "Phone number must be 9 digits long";
             }  else {
-                $message = "Registration successful!";
+                
+                // hash the password before storing
+                $hashed = password_hash($userpassword, PASSWORD_DEFAULT);
+
+                // prepared statement to prevent injection
+                $stmt = $con->prepare("INSERT INTO users (userName, userEmail, userPassword, userNumber, userRole) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param('sssss', $username, $useremail, $hashed, $usernumber, $userRole);
+
+                if ($stmt->execute()) {
+                    $message = "Account registered successfully";
+                } else {
+                    $message = "Error: " . $stmt->error;
+                }
+                $stmt->close();
             }
         }
     ?>
@@ -79,23 +95,29 @@
                     </div>
 
                     <div class="box">
-                        <input type="text" id="userPassword" name="userPassword" placeholder="Obama123!">
+                        <input type="password" id="userPassword" name="userPassword" placeholder="Enter password">
                         <span><?php echo $passwordmessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
-                        <input type="text" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" >
+                        <input type="password" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" >
                         <span><?php echo $confirmPasswordMessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
+                        <input type="tel" id="userNumber" name="userNumber" placeholder="123456789" pattern="\d{9}">
+                        <span><?php echo $numbermessage; ?></span>
+                    </div>
+
+                    <div class="box">
                         <select name="userRole">
-                            <option value="admin">Adminstrator</option>
+                            <option value="admin">Admin</option>
                             <option value="user">User</option>
                         </select>
                     </div>
 
-                     <button type="submit">Sign In Your Account</button>
+                    <input type="submit" id="submit" name="submit" value="Register">
+                     <span><?php echo $message ?></span> <!--Display validation error messages -->
                     <p>Already Have Account? <a href="../Login/Login.php" style = "color: #007bff; font-size: 14px;">Login Here!</a></p>
                 </div>
             </form>
