@@ -69,22 +69,22 @@
                 <div class="form">
                     <h2>Please Register Your Account</h2>
                     <div class="box">
-                        <input type="text" id="userName" name="userName" placeholder="Barack Hussein" required>
+                        <input type="text" id="userName" name="userName" placeholder="Barack Hussein">
                         <span><?php echo $namemessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
-                        <input type="email" id="userEmail" name="userEmail" placeholder="Obama69@gmail.com" required>
+                        <input type="email" id="userEmail" name="userEmail" placeholder="Obama69@gmail.com">
                         <span><?php echo $emailmessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
-                        <input type="text" id="userPassword" name="userPassword" placeholder="Obama123!" required>
+                        <input type="text" id="userPassword" name="userPassword" placeholder="Obama123!">
                         <span><?php echo $passwordmessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
-                        <input type="text" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" required>
+                        <input type="text" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" >
                         <span><?php echo $confirmPasswordMessage; ?></span> <!--Display validation error messages -->
                     </div>
 
