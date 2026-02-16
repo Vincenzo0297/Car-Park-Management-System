@@ -21,8 +21,8 @@
 
             <div class="nav-menu" id="nav-menu">
               <ul class="nav-list">
-                <li class="nav-item"><a href="/" class="nav-link">Account</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">List of Car Park Location</a></li>
+                <li class="nav-item"><a href="../Component/Admin/User Management/UserList.php" class="nav-link">List of User Account</a></li>
+                <li class="nav-item"><a href="../Component/Admin/Car Park Management/CarParkList.php" class="nav-link">List of Car Park Locations</a></li>
                 <li class="nav-item"><a href="/" class="nav-link">Logout</a></li>              
               </ul> 
 

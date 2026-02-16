@@ -1,17 +1,10 @@
-<?php
-    session_start();
-    $userName = $_SESSION['username'];
-    $userID = $_SESSION['userID'];
-    $userRole = $_SESSION['userRole'];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Car Park Management List</title>
+    <link rel="stylesheet" href="../../../css/style.css">
 </head>
 
 <body>
@@ -21,9 +14,9 @@
 
             <div class="nav-menu" id="nav-menu">
               <ul class="nav-list">
-                <li class="nav-item"><a href="/" class="nav-link">Account</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">List of Car Park Location</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">Logout</a></li>              
+                <li class="nav-item"><a href="../../../Users/Admin.php" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="../User Management/UserList.php" class="nav-link">List of User Account</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>              
               </ul> 
 
               <div class="nav-close" id="nav-close">

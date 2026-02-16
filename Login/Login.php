@@ -33,6 +33,8 @@
                 $_SESSION['username'] = $user['userName'];
                 $_SESSION['userID'] = $user['userID'];
                 $userType = $user['userRole'];
+                // save role in session for later checks
+                $_SESSION['userRole'] = $userType;
 
                 if ($userType === 'admin') {
                     header('Location: ../Users/Admin.php');
