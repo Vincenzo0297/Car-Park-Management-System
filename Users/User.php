@@ -39,5 +39,9 @@
             </div>
         </nav>
     </header>
+
+      <footer>
+        <p>Car Park Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>
+    </footer>
 </body>
 </html>

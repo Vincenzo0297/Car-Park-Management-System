@@ -36,9 +36,7 @@
             } elseif (!preg_match("/^\d{9}$/", $usernumber)) {
                 $numbermessage = "Phone number must be 9 digits long";
             }  else {
-                
-
-
+            
                 // prepared statement to prevent injection
                 $stmt = $con->prepare("INSERT INTO users (userName, userEmail, userPassword, userNumber, userRole) VALUES (?, ?, ?, ?, ?)");
                 $stmt->bind_param('sssss', $username, $useremail, $userpassword, $usernumber, $userRole);
@@ -126,7 +124,7 @@
     </section>
 
     <footer>
-        <p>School Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>
+        <p>Car Park Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>
     </footer>
 </body>
 </html>
