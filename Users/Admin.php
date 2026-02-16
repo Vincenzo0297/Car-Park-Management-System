@@ -1,7 +1,8 @@
 <?php
     session_start();
-    $userName = $_SESSION['username'];
     $userID = $_SESSION['userID'];
+    $userName = $_SESSION['username'];
+    $userRole = $_SESSION['userRole'];
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 

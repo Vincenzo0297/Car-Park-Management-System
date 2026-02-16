@@ -10,11 +10,13 @@
     <?php
         require '../Database Connection/Connection.php';
 
-        $message = $namemessage = $emailmessage = $passwordmessage = $confirmPasswordMessage = $numbermessage =  ""; //Initlize for error messages;
+        // Initialize variables for error messages and success message  
+        $message = $namemessage = $emailmessage = $passwordmessage = $confirmPasswordMessage = $numbermessage =  "";
         
-        if(isset($_POST['submit'])) { //Check before Submitting
+        // Check if the form is submitted
+        if(isset($_POST['submit'])) { 
 
-            //Initilize the variables 
+            // Retrieve and sanitize form data
             $username = trim($_POST['userName']);
             $useremail = trim($_POST['userEmail']);
             $userpassword = $_POST['userPassword'];
@@ -22,7 +24,7 @@
             $usernumber = trim($_POST['userNumber']);
             $userRole = $_POST['userRole'];
 
-            //Form validation check 
+            // Validate form data
             if (!preg_match("/^[a-zA-Z ]*$/", $username)) {
                 $namemessage = "Only letters and white space allowed in name field";
             } else if(!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $useremail)) {
@@ -35,12 +37,11 @@
                 $numbermessage = "Phone number must be 9 digits long";
             }  else {
                 
-                // hash the password before storing
-                $hashed = password_hash($userpassword, PASSWORD_DEFAULT);
+
 
                 // prepared statement to prevent injection
                 $stmt = $con->prepare("INSERT INTO users (userName, userEmail, userPassword, userNumber, userRole) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('sssss', $username, $useremail, $hashed, $usernumber, $userRole);
+                $stmt->bind_param('sssss', $username, $useremail, $userpassword, $usernumber, $userRole);
 
                 if ($stmt->execute()) {
                     $message = "Account registered successfully";

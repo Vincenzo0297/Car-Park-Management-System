@@ -8,6 +8,44 @@
 </head>
 
 <body>
+    <?php
+        session_start();
+        require '../Database Connection/Connection.php';
+
+        $message = "";
+
+        // handle form submission on POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $identifier = trim($_POST['email']);
+            $userpassword = $_POST['password'];
+
+            // check credentials with prepared statement against email column
+            $stmt = mysqli_prepare($con,
+                "SELECT userID, userName, userRole
+                 FROM users
+                 WHERE userEmail = ? AND userPassword = ?");
+            mysqli_stmt_bind_param($stmt, "ss", $identifier, $userpassword);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if (mysqli_num_rows($result) === 1) {
+                $user = mysqli_fetch_assoc($result);
+                $_SESSION['username'] = $user['userName'];
+                $_SESSION['userID'] = $user['userID'];
+                $userType = $user['userRole'];
+
+                if ($userType === 'admin') {
+                    header('Location: ../Users/Admin.php');
+                } else {
+                    header('Location: ../Users/User.php');
+                }
+                exit();
+            } else {
+                $message = "Invalid email or password";
+            }
+        }
+    ?>
+
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav-logo"> <h2>Management System</h2> </a>
@@ -48,9 +86,10 @@
                             <input type="password" name="password" placeholder="Enter your Password" required />
                         </div>
 
-                        <button type="submit">Sign In Your Account</button>
+                        <button type="submit" name="submit">Sign In Your Account</button>
+                        <?php echo $message ?> <!--Display error message if login fails -->
                         <p>Don't have an account? <a href="../Registration/Register.php" style = "color: #007bff; font-size: 14px;">Register Account</a></p>
-                </div>
+                    </div>
             </form>
         </div>
     </section>
