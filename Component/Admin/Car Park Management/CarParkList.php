@@ -91,6 +91,10 @@
                                 <td><?= $location['ParkingSpace'] ?></td>
                                 <td><?= $location['CostPerHr'] ?></td>
                                 <td><?= $location['LateCostPerHr'] ?></td>
+                                <td>
+                                    <button><a href="../../Admin/Car Park Management/EditLocation.php?LocationID=<?= $location['LocationID'] ?>">Edit</a></button>
+                                    <button><a href="../../Admin/Car Park Management/DeleteLocation.php?LocationID=<?= $location['LocationID'] ?>">Delete</a></button>
+                                </td>
                             </tr>
                         <?php } ?>
                         

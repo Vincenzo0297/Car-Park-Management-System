@@ -235,7 +235,7 @@ h3{
 }
 .login-container .form p {
     margin-top: 10px;
-    color: #232323;
+    color: #5a5656;
     font-size: 14px;
 }
 .login-container .form button {
@@ -402,7 +402,13 @@ footer p{
 .search-form {
     margin-bottom: var(--m-2);
 }
-
+.search-form input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
 table {
     display: block;              /* treat as block for reliable centering */
     width: 80%;                  /* narrower width for visual centering */

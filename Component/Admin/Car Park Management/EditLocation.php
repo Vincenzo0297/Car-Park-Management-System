@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Car Park Location</title>
+    <title>Edit Car Park Location</title>
     <link rel="stylesheet" href="../../../css/style.css">
 </head>
 
@@ -14,7 +14,7 @@
 
          // Initialize variables for error messages and success message
          $LocationNameMessage = $DescriptionMessage = $ParkingSpaceMessage = $CostPerHrMessage = $LateCostPerHrMessage = $message = "";
-        
+
          // Check if the form is submitted
         if(isset($_POST['submit'])) { 
 
@@ -38,14 +38,15 @@
                 $ParkingSpaceMessage = "Parking space (capacity) cannot be negative";
              } else {
             
-                /// Insert SQL statement into database
-                $insertLocation = "INSERT INTO `locations`(`LocationName`, `LocationDescription`, `Capacity`, `ParkingSpace`, `CostPerHr`, `LateCostPerHr`) 
-                VALUES ('$locationName', '$LocationDescriptions', '0', '$parkingSpace', '$costPerHr', '$lateCostPerHr')";
-                
-                if(mysqli_query($con, $insertLocation)){ //check variables if is execute the sql in the database
-                    $message = "Location Has Created Successfully.";
+                // prepared statement to prevent injection
+                $stmt = $con->prepare("UPDATE locations SET LocationName=?, LocationDescription=?, parkingSpace=?, costPerHr=?, lateCostPerHr=? WHERE LocationID=?");
+               
+                $locationID = $_GET['LocationID']; // Assuming LocationID is passed as a query parameter
+                $stmt->bind_param("ssiiid", $locationName, $LocationDescriptions, $parkingSpace, $costPerHr, $lateCostPerHr, $locationID);
+                if ($stmt->execute()) {
+                    $message = "Location updated successfully!";
                 } else {
-                    $message = "Error: " . mysqli_error($con);
+                    $message = "Error: " . $stmt->error;
                 }
             }
         }
@@ -79,12 +80,12 @@
 
     <section>
         <div class="login-container"> 
-            <form action="AddLocation.php" method="POST">
+            <form action="EditLocation.php" method="POST">
                 <div class="form">
-                    <h2>Add New Location</h2>
+                    <h2>Edit Location</h2>
                     <div class="box">
                         <input type="text" id="LocationName" name="LocationName" placeholder="Location Name">
-                         <span><?php echo $LocationNameMessage; ?></span> <!--Display validation error messages -->
+                        <span><?php echo $LocationNameMessage; ?></span> <!--Display validation error messages -->
                     </div>
 
                     <div class="box">
@@ -99,30 +100,26 @@
 
                     <div class="box">
                         <input type="text" id="CostPerHr" name="CostPerHr" placeholder="Cost per hour ($)" required>
-                        <span><?php echo $CostPerHrMessage; ?></span> <!--Display validation error messages -->
+                        <span><?php echo $CostPerHrMessage; ?></span> <!--Display validation error messages -->                        
                     </div>
 
                     <div class="box">
                         <input type="text" id="LateCostPerHr" name="LateCostPerHr" placeholder="Late cost per hour ($)" required>
                         <span><?php echo $LateCostPerHrMessage; ?></span> <!--Display validation error messages -->
-                    </div>
+                     </div>
 
-                    <div class="box">
-                        <button type="submit" id="submit" name="submit">Add Location</button>
-                    </div>
+                     <div class="box">
+                        <button type="submit" id="submit" name="submit">Update Location</button>
+                     </div>
 
-                    <input type="reset" id="reset" name="reset" value="Reset">
-                    <input type="button" id="back" name="back" value="Back" onclick="window.location.href='CarParkList.php'">
-                    
+                     <input type="reset" id="reset" name="reset" value="Reset">
+                     <input type="button" id="back" name="back" value="Back" onclick="window.location.href='CarParkList.php'">
                 </div>
-                 <span><?php echo $message; ?></span> <!--Display success or error message -->
+                <span><?php echo $message; ?></span> <!--Display success or error message -->
             </form>
-           
         </div>
     </section>
 
-    <footer>
-        <p>Car Park Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>
-    </footer>
+
 </body>
 </html>
