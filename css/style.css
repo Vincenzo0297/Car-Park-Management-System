@@ -403,8 +403,8 @@ footer p{
     margin-bottom: var(--m-2);
 }
 .search-form input[type="text"] {
-    padding: 10px;
-    font-size: 16px;
+    padding: 0.5rem 1rem;
+    font-size: var(--normal-font-size);
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 200px;

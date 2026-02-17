@@ -11,10 +11,10 @@
     $search = '';
     if (!empty($_POST['search']) && strlen(trim($_POST['search'])) > 0) {
         $search = $_POST['search'];
-        $sql = "SELECT userID,userName,userEmail,userNumber,userRole FROM users
+        $sql = "SELECT userID,userName,userEmail,userNumber FROM users
                 WHERE userName LIKE '%$search%' OR userEmail LIKE '%$search%'";
     } else {
-        $sql = "SELECT userID,userName,userEmail,userNumber,userRole FROM users";
+        $sql = "SELECT userID,userName,userEmail,userNumber FROM users";
     }
 
     // execute the query
@@ -87,7 +87,8 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Number</th>
-                            <th>Role</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +98,6 @@
                                 <td><?= $user['userName'] ?></td>
                                 <td><?= $user['userEmail'] ?></td>
                                 <td><?= $user['userNumber'] ?></td>
-                                <td><?= $user['userRole'] ?></td>
                             </tr>
                         <?php } ?>
                         
