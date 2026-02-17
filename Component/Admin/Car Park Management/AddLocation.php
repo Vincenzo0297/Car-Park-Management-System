@@ -9,6 +9,7 @@
 
 <body>
     <?php
+        // Include the database connection file
         require '../../../Database Connection/Connection.php';
 
          // Initialize variables for error messages and success message

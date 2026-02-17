@@ -1,14 +1,14 @@
 <?php
-    // Database configuration  
+    // Database connection parameters
     $hostname = "localhost"; 
     $username = "root"; 
     $password = ""; 
     $dbname   = "dbcarparksystem";
 
-    // Create database connection 
+    // Create connection
     $con = new mysqli($hostname, $username, $password, $dbname); 
 
-    // Check connection 
+    // Check connection
     if ($con->connect_error) { 
         die("Connection failed: " . $con->connect_error); 
     }

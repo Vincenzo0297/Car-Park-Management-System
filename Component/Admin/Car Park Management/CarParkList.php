@@ -19,7 +19,6 @@
     $locationDetails = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

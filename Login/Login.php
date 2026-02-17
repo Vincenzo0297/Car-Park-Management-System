@@ -9,12 +9,14 @@
 
 <body>
     <?php
+        // Start session and include database connection
+        // session_start() must be called before any output is sent to the browser, so it should be at the very beginning of the PHP code block
         session_start();
         require '../Database Connection/Connection.php';
 
         $message = "";
 
-        // handle form submission on POST
+        // Check if the form is submitted
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $identifier = trim($_POST['email']);
             $userpassword = $_POST['password'];
@@ -24,16 +26,18 @@
                 "SELECT userID, userName, userRole
                  FROM users
                  WHERE userEmail = ? AND userPassword = ?");
+
+            // bind parameters and execute statement
             mysqli_stmt_bind_param($stmt, "ss", $identifier, $userpassword);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
 
+            // if a matching user is found, set session variables and redirect based on role
             if (mysqli_num_rows($result) === 1) {
                 $user = mysqli_fetch_assoc($result);
-                $_SESSION['username'] = $user['userName'];
                 $_SESSION['userID'] = $user['userID'];
+                $_SESSION['username'] = $user['userName'];
                 $userType = $user['userRole'];
-                // save role in session for later checks
                 $_SESSION['userRole'] = $userType;
 
                 if ($userType === 'admin') {
