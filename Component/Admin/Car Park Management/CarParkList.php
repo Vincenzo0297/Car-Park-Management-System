@@ -1,3 +1,25 @@
+<?php
+     // Include the database connection file
+     require '../../../Database Connection/Connection.php';
+
+    // search location from POST, default to empty string
+    $searchLocation = '';
+    if (!empty($_POST['search']) && strlen(trim($_POST['search'])) > 0) {
+        $searchLocation = $_POST['search'];
+        $sql = "SELECT * FROM locations
+                WHERE locationName LIKE '%$searchLocation%' or costPerHr LIKE '%$searchLocation%' or lateCostPerHr LIKE '%$searchLocation%'";
+    } else {
+        $sql = "SELECT * FROM locations";
+    }
+
+    // execute the query
+    $result =  mysqli_query($con, $sql);
+
+    // fetch all results as an associative array
+    $locationDetails = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +64,7 @@
                          <input type="text" name="search" placeholder="Search car park locations">
                          <button>Search</button>
                          <button><a href="../../Admin/Car Park Management/AddLocation.php">Add Location</a></button>
+                        <p>Total: <?= count($locationDetails) ?></p>    
                     </div>
                 </form>
 
@@ -51,6 +74,7 @@
                             <th>ID</th>
                             <th>Location Name</th>
                             <th>Description</th>
+                            <th>Total Capacity</th>
                             <th>Parking Space (Capacity)</th>
                             <th>Cost per hour ($)</th>
                             <th>Late cost per hour ($)</th>
@@ -59,7 +83,23 @@
                     </thead>
 
                     <tbody>
-          
+                        <?php foreach ($locationDetails as $location) { ?>
+                            <tr>
+                                <td><?= $location['LocationID'] ?></td>
+                                <td><?= $location['LocationName'] ?></td>
+                                <td><?= $location['LocationDescription'] ?></td>
+                                <td><?= $location['Capacity'] ?></td>
+                                <td><?= $location['ParkingSpace'] ?></td>
+                                <td><?= $location['CostPerHr'] ?></td>
+                                <td><?= $location['LateCostPerHr'] ?></td>
+                            </tr>
+                        <?php } ?>
+                        
+                        <?php if (count($locationDetails) === 0) { ?>
+                            <tr>
+                                <td colspan="8">No car park locations found.</td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div> 

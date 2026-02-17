@@ -45,14 +45,12 @@ COMMIT;
 -- Dumping data for table `users`
 --
 
-
 CREATE TABLE `locations` (
   `LocationID` int(11) NOT NULL,
   `LocationName` varchar(100) NOT NULL,
-  `LocationDescription` varchar(100) NOT NULL,
+  `DescriptionLocation` varchar(100) NOT NULL,
   `Capacity` int(11) NOT NULL,
   `ParkingSpace` int(11) NOT NULL,
   `CostPerHr` double NOT NULL,
-  `LateCostPerHr` decimal(10,0) NOT NULL
+  `LateCost` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-COMMIT;

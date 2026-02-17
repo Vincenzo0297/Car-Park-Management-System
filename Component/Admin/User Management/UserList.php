@@ -1,4 +1,5 @@
 <?php
+    // Include the database connection file
     require '../../../Database Connection/Connection.php';
 
     // search term from POST, default to empty string
@@ -61,9 +62,6 @@
                     <div class="box">
                          <input type="text" name="search" placeholder="Search users">
                          <button>Search</button>
-                    </div>
-                   
-                    <div class="box">
                          <p>Total: <?= count($users) ?></p>
                     </div>
                 </form>
@@ -79,19 +77,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($users): foreach ($users as $u): ?>
-                        <tr>
-                            <td><?php echo $u['userID'] ?></td>
-                            <td><?php echo $u['userName'] ?></td>
-                            <td><?php echo $u['userEmail'] ?></td>
-                            <td><?php echo $u['userNumber'] ?></td>
-                            <td><?php echo $u['userRole'] ?></td>
-                        </tr>
-                        <?php endforeach; else: ?>
+                        <?php foreach ($users as $user) { ?>
+                            <tr>
+                                <td><?= $user['userID'] ?></td>
+                                <td><?= $user['userName'] ?></td>
+                                <td><?= $user['userEmail'] ?></td>
+                                <td><?= $user['userNumber'] ?></td>
+                                <td><?= $user['userRole'] ?></td>
+                            </tr>
+                        <?php } ?>
+                        
+                        <?php if (count($users) === 0) { ?>
                             <tr>
                                 <td colspan="5">No users found.</td>
                             </tr>
-                        <?php endif; ?>
+                        <?php } ?>
                     </tbody>
                 </table>
 

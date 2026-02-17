@@ -29,28 +29,25 @@
                 $LocationNameMessage = "Only letters, numbers, and white space allowed in location name field";
             } elseif (!preg_match("/^[a-zA-Z0-9 .,!?]*$/", $LocationDescriptions)) {
                 $DescriptionMessage = "Only letters, numbers, spaces, and basic punctuation allowed in description field";
-            } elseif (!is_numeric($parkingSpace) || $parkingSpace < 0) {
-                $ParkingSpaceMessage = "Parking space must be a non-negative number";
-            } elseif (!is_numeric($costPerHr) || $costPerHr < 0) {
-                $CostPerHrMessage = "Cost per hour must be a non-negative number";
-            } elseif (!is_numeric($lateCostPerHr) || $lateCostPerHr < 0) {
-                $LateCostPerHrMessage = "Late cost per hour must be a non-negative number";
-            } else {
+            } elseif (!preg_match("/^\d+(\.\d{1,2})?$/", $costPerHr)) {
+                $CostPerHrMessage = "Please enter a valid cost per hour (up to 2 decimal places)";
+            } elseif (!preg_match("/^\d+(\.\d{1,2})?$/", $lateCostPerHr)) {
+                $LateCostPerHrMessage = "Please enter a valid late cost per hour (up to 2 decimal places)";
+            } elseif ($parkingSpace < 0) {
+                $ParkingSpaceMessage = "Parking space (capacity) cannot be negative";
+             } else {
             
                 // prepared statement to prevent injection
                 $stmt = $con->prepare("INSERT INTO locations (LocationName, LocationDescription, parkingSpace, Capacity, costPerHr, lateCostPerHr) VALUES (?, ?, ?, ?, ?, ?)");
                
                 // Set initial capacity to 0 when adding a new location
-                $currentCapacity = 0; 
-                $stmt->bind_param('ssiiid', $locationName, $LocationDescriptions, $parkingSpace, $currentCapacity, $costPerHr, $lateCostPerHr);
-            
-                // Execute the statement and check for success
+                $currentCapacity = 0;
+                $stmt->bind_param("ssiidd", $locationName, $LocationDescriptions, $parkingSpace, $currentCapacity, $costPerHr, $lateCostPerHr);
                 if ($stmt->execute()) {
-                    $message = "Location added successfully";
+                    $message = "New location added successfully!";
                 } else {
                     $message = "Error: " . $stmt->error;
                 }
-                $stmt->close();
             }
         }
     ?>
