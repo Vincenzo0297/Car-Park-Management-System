@@ -1,6 +1,5 @@
 <?php
     session_start();
-    $userID = $_SESSION['userID'];
     $userName = $_SESSION['username'];
     $userRole = $_SESSION['userRole'];
 ?>
@@ -23,7 +22,11 @@
               <ul class="nav-list">
                 <li class="nav-item"><a href="/" class="nav-link">Account</a></li>
                 <li class="nav-item"><a href="/" class="nav-link">List of Car Park Location</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">Logout</a></li>              
+                <li class="nav-item">
+                  <form action="../Logout/Logout.php" method="POST">
+                    <button type="submit" name="Logout" class="nav-link logout-button">Logout</button>
+                  </form>
+                </li>               
               </ul> 
 
               <div class="nav-close" id="nav-close">

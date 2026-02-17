@@ -1,6 +1,6 @@
 <?php
+    // Start the session and retrieve user information
     session_start();
-    $userID = $_SESSION['userID'];
     $userName = $_SESSION['username'];
     $userRole = $_SESSION['userRole'];
 ?>
@@ -19,11 +19,20 @@
         <nav class="nav container">
             <a href="#" class="nav-logo"> <h2>Management System</h2> </a>
 
+            <div class="user-info">
+                <p>Welcome, <?php echo $userName; ?> (<?php echo $userRole; ?>) 
+              </p>
+            </div>
+
             <div class="nav-menu" id="nav-menu">
               <ul class="nav-list">
                 <li class="nav-item"><a href="../Component/Admin/User Management/UserList.php" class="nav-link">List of User Account</a></li>
                 <li class="nav-item"><a href="../Component/Admin/Car Park Management/CarParkList.php" class="nav-link">List of Car Park Locations</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">Logout</a></li>              
+                <li class="nav-item">
+                  <form action="../Logout/Logout.php" method="POST">
+                    <button type="submit" name="Logout" class="nav-link logout-button">Logout</button>
+                  </form>
+                </li>            
               </ul> 
 
               <div class="nav-close" id="nav-close">
