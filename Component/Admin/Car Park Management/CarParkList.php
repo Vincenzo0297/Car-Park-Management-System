@@ -34,7 +34,37 @@
         </nav>
     </header>
 
-    
+    <section>
+        <div class="login-container">
+            <div class="search-form"> 
+                <form method="POST">
+                    <div class="box">
+                         <input type="text" name="search" placeholder="Search car park locations">
+                         <button>Search</button>
+                         <button><a href="../../Admin/Car Park Management/AddLocation.php">Add Location</a></button>
+                    </div>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Location Name</th>
+                            <th>Description</th>
+                            <th>Parking Space (Capacity)</th>
+                            <th>Cost per hour ($)</th>
+                            <th>Late cost per hour ($)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+          
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+    </section>
 
       <footer>
         <p>Car Park Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>

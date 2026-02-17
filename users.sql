@@ -45,7 +45,14 @@ COMMIT;
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `userName`, `userPassword`, `userConfirmPassword`, `userEmail`, `userRole`) VALUES
-(15, 'vincent', 'Vincent123!', 'Vincent123!', 'vincent@gmail.com', 'user'),
-(16, 'Barack', 'Obama123!', 'Obama123!', 'obama123@gmail.com', 'user'),
-(17, 'Osama', 'labin123!', 'labin123!', 'osama89@gmail.com', 'user');  
+
+CREATE TABLE `locations` (
+  `LocationID` int(11) NOT NULL,
+  `LocationName` varchar(100) NOT NULL,
+  `LocationDescription` varchar(100) NOT NULL,
+  `Capacity` int(11) NOT NULL,
+  `ParkingSpace` int(11) NOT NULL,
+  `CostPerHr` double NOT NULL,
+  `LateCostPerHr` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+COMMIT;
