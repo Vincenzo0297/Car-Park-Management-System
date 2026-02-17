@@ -1,3 +1,23 @@
+<?php
+    require '../../../Database Connection/Connection.php';
+
+    // search term from POST, default to empty string
+    $search = '';
+    if (!empty($_POST['search']) && strlen(trim($_POST['search'])) > 0) {
+        $search = $_POST['search'];
+        $sql = "SELECT userID,userName,userEmail,userNumber,userRole FROM users
+                WHERE userName LIKE '%$search%' OR userEmail LIKE '%$search%'";
+    } else {
+        $sql = "SELECT userID,userName,userEmail,userNumber,userRole FROM users";
+    }
+
+    // execute the query
+    $result =  mysqli_query($con, $sql);
+
+    // fetch all results as an associative array
+    $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +53,51 @@
             </div>
         </nav>
     </header>
+
+    <section> 
+        <div class="login-container">
+            <div class="search-form"> 
+                <form method="POST">
+                    <div class="box">
+                         <input type="text" name="search" placeholder="Search users">
+                         <button>Search</button>
+                    </div>
+                   
+                    <div class="box">
+                         <p>Total: <?= count($users) ?></p>
+                    </div>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Number</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($users): foreach ($users as $u): ?>
+                        <tr>
+                            <td><?php echo $u['userID'] ?></td>
+                            <td><?php echo $u['userName'] ?></td>
+                            <td><?php echo $u['userEmail'] ?></td>
+                            <td><?php echo $u['userNumber'] ?></td>
+                            <td><?php echo $u['userRole'] ?></td>
+                        </tr>
+                        <?php endforeach; else: ?>
+                            <tr>
+                                <td colspan="5">No users found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
 
       <footer>
         <p>Car Park Management System &nbsp;&nbsp;|&nbsp;&nbsp; © Copyright: Foolish Developer &nbsp;&nbsp;|&nbsp;&nbsp; SchoolManagement@gmail.com</p>

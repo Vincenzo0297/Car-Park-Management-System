@@ -198,53 +198,6 @@ h3{
     box-shadow: 0 1px 4px rgba(165, 125, 125, 0.02);
 }
 
-/*========== About ==========*/
-.about.section {
-  color: white; /* Text color */
-  background-image: url('/my-react-app/src/component/Image/schoolwallpaper.jpg'); /* Replace with your image path */
-  background-size: cover;        /* Make the image cover the container */
-  background-position: center;   /* Center the image */
-  background-repeat: no-repeat;  /* Prevent repeating */
-  background-attachment: fixed;  /* Keep the image fixed when scrolling or zooming */
-}
-.about-content{
-    flex: 0 0 75%;
-    max-width: 75%;
-}
-.about-text p{
-    text-align: justify;
-    margin-bottom: var(--m-1);
-    color: black;
-}
-.btn {
-  line-height: 3;
-  border-radius: 5px;
-  width: 20%;      /* Takes full width of parent */
-  display: block;   /* Allows width: 100% to work */
-  text-align: center;
-  font-size: 14px;
-}
-.btn-default{
-    color: #000000;
-    vertical-align: middle;
-    display: inline-block;
-    background-color: rgb(255, 255, 255);
-}
-.btn-default:hover{
-    animation-name: button-push;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
-}
-@keyframes button-push{
-    50%{
-        transform: scale(0.8);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
-
 /*========== Login ==========*/
 .login-container {
     margin: 0;
@@ -443,4 +396,34 @@ footer p{
         width: 90%;
         margin: 0 auto;
     }
+}
+
+/*========== Table styling ==========*/
+.search-form {
+    margin-bottom: var(--m-2);
+}
+
+table {
+    display: block;              /* treat as block for reliable centering */
+    width: 80%;                  /* narrower width for visual centering */
+    max-width: 900px;
+    border-collapse: collapse;
+    margin: var(--m-2) auto !important;      /* force center horizontally */
+}
+table th,
+table td {
+    padding: .75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+/* header row uses solid black background */
+table thead {
+    background-color: #000;
+    color: #fff;
+}
+tbody tr:nth-child(even) {
+    background-color: var(--color-light);
+}
+tbody tr:hover {
+    background-color: var(--color-gray);
 }
