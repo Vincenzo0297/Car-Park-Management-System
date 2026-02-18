@@ -80,7 +80,7 @@
                     </div>
                 </form>
 
-                <table>
+                <table>        
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -98,7 +98,16 @@
                                 <td><?= $user['userName'] ?></td>
                                 <td><?= $user['userEmail'] ?></td>
                                 <td><?= $user['userNumber'] ?></td>
-                            </tr>
+                                <td>
+                                    <form action="/" method="POST">
+                                        <button type="submit" name="CheckIn" class="nav-link">Check In</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/" method="POST">
+                                        <button type="submit" name="CheckOut" class="nav-link">Check Out</button>
+                                    </form>
+                                </td>
                         <?php } ?>
                         
                         <?php if (count($users) === 0) { ?>
@@ -107,6 +116,20 @@
                             </tr>
                         <?php } ?>
                     </tbody>
+                </table>
+
+                <table>        
+                    <thead>
+                        <tr>
+                            <th>Location Name</th>
+                            <th>Description</th>
+                            <th>Total Capacity</th>
+                            <th>Parking Space (Capacity)</th>
+                            <th>Check In Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
                 </table>
 
             </div>

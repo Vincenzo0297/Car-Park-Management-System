@@ -16,23 +16,33 @@
 
 <body>
     <?php
-        // Include the database connection file
         require '../../../Database Connection/Connection.php';
 
-         // Initialize variables for error messages and success message
-         $LocationNameMessage = $DescriptionMessage = $ParkingSpaceMessage = $CostPerHrMessage = $LateCostPerHrMessage = $message = "";
+        // Initialize variables
+        $LocationNameMessage = $DescriptionMessage = $ParkingSpaceMessage = 
+        $CostPerHrMessage = $LateCostPerHrMessage = $message = "";
+        $locationRow = [];
 
-         // Check if the form is submitted
-        if(isset($_POST['submit'])) { 
+        if (isset($_GET['LocationID'])) {
 
-            // Retrieve and sanitize form data
+            $LocationID = intval($_GET['LocationID']);
+            $stmt = $con->prepare("SELECT * FROM locations WHERE LocationID = ?");
+            $stmt->bind_param("i", $LocationID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $locationRow = $result->fetch_assoc();
+            $stmt->close();
+        }
+
+        if (isset($_POST['submit'])) {
+
+            $LocationID = intval($_POST['LocationID']);
             $locationName = $_POST['LocationName'];
             $LocationDescriptions = $_POST['LocationDescription'];
             $parkingSpace = $_POST['ParkingSpace'];
             $costPerHr = $_POST['CostPerHr'];
             $lateCostPerHr = $_POST['LateCostPerHr'];
 
-            // Validate form data
             if (!preg_match("/^[a-zA-Z0-9 ]*$/", $locationName)) {
                 $LocationNameMessage = "Only letters, numbers, and white space allowed in location name field";
             } elseif (!preg_match("/^[a-zA-Z0-9 .,!?]*$/", $LocationDescriptions)) {
@@ -41,55 +51,42 @@
                 $CostPerHrMessage = "Please enter a valid cost per hour (up to 2 decimal places)";
             } elseif (!preg_match("/^\d+(\.\d{1,2})?$/", $lateCostPerHr)) {
                 $LateCostPerHrMessage = "Please enter a valid late cost per hour (up to 2 decimal places)";
-            } elseif ($parkingSpace < 0) {
+            } elseif (!preg_match("/^\d+$/", $parkingSpace)) {
                 $ParkingSpaceMessage = "Parking space (capacity) cannot be negative";
-             } else {
-            
-                // prepared statement to prevent injection
-                $stmt = $con->prepare("UPDATE locations SET LocationName=?, LocationDescription=?, parkingSpace=?, costPerHr=?, lateCostPerHr=? WHERE LocationID=?");
-               
-                $locationID = $_GET['LocationID']; // Assuming LocationID is passed as a query parameter
-                $stmt->bind_param("ssiiid", $locationName, $LocationDescriptions, $parkingSpace, $costPerHr, $lateCostPerHr, $locationID);
+            } else {
+
+                $stmt = $con->prepare("UPDATE locations SET LocationName = ?, LocationDescription = ?, ParkingSpace = ?, CostPerHr = ?, LateCostPerHr = ? WHERE LocationID = ?");
+                $stmt->bind_param("ssiddi", $locationName, $LocationDescriptions, $parkingSpace, $costPerHr, $lateCostPerHr, $LocationID);
+
                 if ($stmt->execute()) {
-                    $message = "Location updated successfully!";
+                    $message = "Location successfully updated";
                 } else {
                     $message = "Error: " . $stmt->error;
                 }
+
+                $stmt->close();
             }
         }
     ?>
 
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav-logo"> <h2>Management System</h2> </a>
+            <a href="#" class="nav-logo"><h2>Management System</h2></a>
 
             <div class="user-info">
-                <p>Welcome, <?php echo $userName; ?> (<?php echo $userRole; ?>) 
-              </p>
+                <p>Welcome, <?php echo $userName; ?> (<?php echo $userRole; ?>)</p>
             </div>
 
             <div class="nav-menu" id="nav-menu">
-              <ul class="nav-list">
-                <li class="nav-item"><a href="../../../Users/Admin.php" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="../User Management/UserList.php" class="nav-link">List of User Account</a></li>
-                <li class="nav-item">
-                  <form action="../../../Logout/Logout.php" method="POST">
-                    <button type="submit" name="Logout" class="nav-link logout-button">Logout</button>
-                  </form>
-                </li>                 
-              </ul> 
-
-              <div class="nav-close" id="nav-close">
-                <!-- icon placeholder -->
-                &times;
-              </div>
-            </div>
-
-            <div class="nav-btn">
-              <div class="nav-toggle" id="nav-toggle">
-                <!-- icon placeholder -->
-                &#9776;
-              </div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="../../../Users/Admin.php" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="../User Management/UserList.php" class="nav-link">List of User Account</a></li>
+                    <li class="nav-item">
+                        <form action="../../../Logout/Logout.php" method="POST">
+                            <button type="submit" name="Logout" class="nav-link logout-button">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -99,43 +96,56 @@
             <form action="EditLocation.php" method="POST">
                 <div class="form">
                     <h2>Edit Location</h2>
+
+                    <!-- Hidden LocationID (VERY IMPORTANT) -->
+                    <input type="hidden" name="LocationID" 
+                    value="<?php echo isset($locationRow['LocationID']) ? $locationRow['LocationID'] : ''; ?>">
+
                     <div class="box">
-                        <input type="text" id="LocationName" name="LocationName" placeholder="Location Name">
-                        <span><?php echo $LocationNameMessage; ?></span> <!--Display validation error messages -->
+                        <input type="text" name="LocationName"
+                        value="<?php echo isset($locationRow['LocationName']) ? $locationRow['LocationName'] : ''; ?>"
+                        placeholder="Location Name">
+                        <span><?php echo $LocationNameMessage; ?></span>
                     </div>
 
                     <div class="box">
-                         <textarea id="LocationDescription" name="LocationDescription" required rows="3" cols="40" placeholder="Enter location description"></textarea>
-                         <span><?php echo $DescriptionMessage; ?></span> <!--Display validation error messages -->
+                        <textarea name="LocationDescription" rows="3" cols="40"
+                        placeholder="Enter location description"><?php 
+                        echo isset($locationRow['LocationDescription']) ? $locationRow['LocationDescription'] : ''; 
+                        ?></textarea>
+                        <span><?php echo $DescriptionMessage; ?></span>
                     </div>
 
                     <div class="box">
-                         <input type="number" id="ParkingSpace" name="ParkingSpace" placeholder="Parking Space (Capacity):" required min="0">
-                         <span><?php echo $ParkingSpaceMessage; ?></span> <!--Display validation error messages -->
+                        <input type="number" name="ParkingSpace" min="0"
+                        value="<?php echo isset($locationRow['ParkingSpace']) ? $locationRow['ParkingSpace'] : ''; ?>"
+                        placeholder="Parking Space (Capacity)">
+                        <span><?php echo $ParkingSpaceMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <input type="text" id="CostPerHr" name="CostPerHr" placeholder="Cost per hour ($)" required>
-                        <span><?php echo $CostPerHrMessage; ?></span> <!--Display validation error messages -->                        
+                        <input type="text" name="CostPerHr"
+                        value="<?php echo isset($locationRow['CostPerHr']) ? $locationRow['CostPerHr'] : ''; ?>"
+                        placeholder="Cost per hour ($)">
+                        <span><?php echo $CostPerHrMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <input type="text" id="LateCostPerHr" name="LateCostPerHr" placeholder="Late cost per hour ($)" required>
-                        <span><?php echo $LateCostPerHrMessage; ?></span> <!--Display validation error messages -->
-                     </div>
+                        <input type="text" name="LateCostPerHr"
+                        value="<?php echo isset($locationRow['LateCostPerHr']) ? $locationRow['LateCostPerHr'] : ''; ?>"
+                        placeholder="Late cost per hour ($)">
+                        <span><?php echo $LateCostPerHrMessage; ?></span>
+                    </div>
 
-                     <div class="box">
-                        <button type="submit" id="submit" name="submit">Update Location</button>
-                     </div>
+                    <div class="box">
+                        <input type="submit" name="submit" value="Update Location">
+                    </div>
 
-                     <input type="reset" id="reset" name="reset" value="Reset">
-                     <input type="button" id="back" name="back" value="Back" onclick="window.location.href='CarParkList.php'">
+                    <input type="button" value="Back" onclick="window.location.href='CarParkList.php'">
+                    <span><?php echo $message; ?></span>
                 </div>
-                <span><?php echo $message; ?></span> <!--Display success or error message -->
             </form>
         </div>
     </section>
-
-
 </body>
 </html>

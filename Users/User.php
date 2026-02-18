@@ -21,7 +21,7 @@
             <div class="nav-menu" id="nav-menu">
               <ul class="nav-list">
                 <li class="nav-item"><a href="/" class="nav-link">Account</a></li>
-                <li class="nav-item"><a href="/" class="nav-link">List of Car Park Location</a></li>
+                <li class="nav-item"><a href="../Component/User/UserViewLocation.php" class="nav-link">List of Car Park Location</a></li>
                 <li class="nav-item">
                   <form action="../Logout/Logout.php" method="POST">
                     <button type="submit" name="Logout" class="nav-link logout-button">Logout</button>

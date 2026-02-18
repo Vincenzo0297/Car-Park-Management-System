@@ -44,16 +44,17 @@
             } elseif ($parkingSpace < 0) {
                 $ParkingSpaceMessage = "Parking space (capacity) cannot be negative";
              } else {
-            
-                /// Insert SQL statement into database
-                $insertLocation = "INSERT INTO `locations`(`LocationName`, `LocationDescription`, `Capacity`, `ParkingSpace`, `CostPerHr`, `LateCostPerHr`) 
-                VALUES ('$locationName', '$LocationDescriptions', '0', '$parkingSpace', '$costPerHr', '$lateCostPerHr')";
+
+                $currentCapacity = '0';
+                $stmt = $con->prepare("INSERT INTO locations (LocationName, LocationDescription, Capacity, ParkingSpace, CostPerHr, LateCostPerHr)  VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('ssssss', $locationName, $LocationDescriptions, $currentCapacity, $parkingSpace, $costPerHr, $lateCostPerHr);
                 
-                if(mysqli_query($con, $insertLocation)){ //check variables if is execute the sql in the database
-                    $message = "Location Has Created Successfully.";
+               if ($stmt->execute()) {
+                    $message = "Location successfully added";
                 } else {
-                    $message = "Error: " . mysqli_error($con);
+                    $message = "Error: " . $stmt->error;
                 }
+                $stmt->close();
             }
         }
     ?>
