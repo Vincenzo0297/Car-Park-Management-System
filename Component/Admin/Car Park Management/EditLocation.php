@@ -100,38 +100,27 @@
                     <input type="hidden" name="LocationID" value="<?php echo isset($locationRow['LocationID']) ? $locationRow['LocationID'] : ''; ?>">
 
                     <div class="box">
-                        <input type="text" name="LocationName"
-                        value="<?php echo isset($locationRow['LocationName']) ? $locationRow['LocationName'] : ''; ?>"
-                        placeholder="Location Name">
+                        <input type="text" name="LocationName" value="<?php echo isset($locationRow['LocationName']) ? $locationRow['LocationName'] : ''; ?>" placeholder="Location Name">
                         <span><?php echo $LocationNameMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <textarea name="LocationDescription" rows="3" cols="40"
-                        placeholder="Enter location description"><?php 
-                        echo isset($locationRow['LocationDescription']) ? $locationRow['LocationDescription'] : ''; 
-                        ?></textarea>
+                        <textarea name="LocationDescription" rows="3" cols="40" placeholder="Enter location description"><?php echo isset($locationRow['LocationDescription']) ? $locationRow['LocationDescription'] : ''; ?></textarea>
                         <span><?php echo $DescriptionMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <input type="number" name="ParkingSpace" min="0"
-                        value="<?php echo isset($locationRow['ParkingSpace']) ? $locationRow['ParkingSpace'] : ''; ?>"
-                        placeholder="Parking Space (Capacity)">
+                        <input type="number" name="ParkingSpace" min="0" value="<?php echo isset($locationRow['ParkingSpace']) ? $locationRow['ParkingSpace'] : ''; ?>"placeholder="Parking Space (Capacity)">
                         <span><?php echo $ParkingSpaceMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <input type="text" name="CostPerHr"
-                        value="<?php echo isset($locationRow['CostPerHr']) ? $locationRow['CostPerHr'] : ''; ?>"
-                        placeholder="Cost per hour ($)">
+                        <input type="text" name="CostPerHr" value="<?php echo isset($locationRow['CostPerHr']) ? $locationRow['CostPerHr'] : ''; ?>" placeholder="Cost per hour ($)">
                         <span><?php echo $CostPerHrMessage; ?></span>
                     </div>
 
                     <div class="box">
-                        <input type="text" name="LateCostPerHr"
-                        value="<?php echo isset($locationRow['LateCostPerHr']) ? $locationRow['LateCostPerHr'] : ''; ?>"
-                        placeholder="Late cost per hour ($)">
+                        <input type="text" name="LateCostPerHr" value="<?php echo isset($locationRow['LateCostPerHr']) ? $locationRow['LateCostPerHr'] : ''; ?>" placeholder="Late cost per hour ($)">
                         <span><?php echo $LateCostPerHrMessage; ?></span>
                     </div>
 
