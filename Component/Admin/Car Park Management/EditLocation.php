@@ -24,7 +24,6 @@
         $locationRow = [];
 
         if (isset($_GET['LocationID'])) {
-
             $LocationID = intval($_GET['LocationID']);
             $stmt = $con->prepare("SELECT * FROM locations WHERE LocationID = ?");
             $stmt->bind_param("i", $LocationID);
@@ -98,8 +97,7 @@
                     <h2>Edit Location</h2>
 
                     <!-- Hidden LocationID (VERY IMPORTANT) -->
-                    <input type="hidden" name="LocationID" 
-                    value="<?php echo isset($locationRow['LocationID']) ? $locationRow['LocationID'] : ''; ?>">
+                    <input type="hidden" name="LocationID" value="<?php echo isset($locationRow['LocationID']) ? $locationRow['LocationID'] : ''; ?>">
 
                     <div class="box">
                         <input type="text" name="LocationName"
